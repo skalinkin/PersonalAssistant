@@ -26,7 +26,7 @@ namespace Console
 
             foreach (var opportunity in repository.FindAll())
             {
-                System.Console.WriteLine(opportunity.Title);
+                System.Console.WriteLine("{0}, {1}",opportunity.Title, opportunity.OriginalSourceId);
             }
 
             System.Console.ReadLine();
