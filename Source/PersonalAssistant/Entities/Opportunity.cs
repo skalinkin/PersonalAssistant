@@ -10,5 +10,6 @@ namespace PersonalAssistant.Entities
         public string Body { get; set; }
         public string OriginalSourceName { get; set; }
         public string OriginalSourceId { get; set; }
+        public Resolution  Resolution { get; set; }
     }
 }

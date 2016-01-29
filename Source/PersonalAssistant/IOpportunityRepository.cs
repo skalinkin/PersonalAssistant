@@ -8,5 +8,6 @@ namespace PersonalAssistant
         void Save(Opportunity item);
         IEnumerable<Opportunity> FindAll();
         Opportunity FindByOriginalSourceId(string link);
+        void Update(Opportunity opportunity);
     }
 }

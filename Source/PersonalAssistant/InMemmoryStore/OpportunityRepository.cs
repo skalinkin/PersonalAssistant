@@ -58,5 +58,18 @@ namespace PersonalAssistant.InMemmoryStore
                 return mapper.Map<Opportunity>(document);
             }
         }
+
+        public void Update(Opportunity opportunity)
+        {
+            using (var session = new Session())
+            {
+                var collection = session.GetCollection<OpportunityDocument>();
+
+                var document = collection.FindOne(d => d.Id == opportunity.Id);
+                mapper.Map(opportunity, document);
+                collection.Update(document);
+
+            }
+        }
     }
 }
