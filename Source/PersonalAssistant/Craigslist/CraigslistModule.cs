@@ -7,6 +7,7 @@ namespace PersonalAssistant.Craigslist
         protected override void Load(ContainerBuilder builder)
         {
             builder.RegisterType<OpportunityFeed>().As<IOpportunityFeed>();
+            builder.RegisterType<WebSiteFactory>().As<WebSiteFactory>();
         }
     }
 }

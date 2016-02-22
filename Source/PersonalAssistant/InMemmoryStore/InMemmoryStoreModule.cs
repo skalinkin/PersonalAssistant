@@ -6,7 +6,7 @@ namespace PersonalAssistant.InMemmoryStore
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.Register(c => new OpportunityRepository()).As<IOpportunityRepository>();
+            builder.Register(c => new OpportunityRepository()).As<PersonalAssistant.OpportunityRepository>();
         }
     }
 }

@@ -1,5 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.Linq;
 using HtmlAgilityPack;
 using PersonalAssistant.Entities;
 
@@ -7,50 +7,39 @@ namespace PersonalAssistant.Craigslist
 {
     internal class OpportunityFeed : IOpportunityFeed
     {
-        private readonly IOpportunityRepository repo;
-        private readonly WebDriver driver;
+        private readonly OpportunityRepository repo;
+        private readonly WebSiteFactory siteFactory;
+        private readonly HtmlWeb webGet;
 
-        public OpportunityFeed(IOpportunityRepository repo)
+        public OpportunityFeed(OpportunityRepository repo, WebSiteFactory siteFactory)
         {
             this.repo = repo;
-            driver = new WebDriver();
+            this.siteFactory = siteFactory;
+            webGet = new HtmlWeb();
         }
 
         public IEnumerable<Opportunity> FetchNew()
         {
-            var document = driver.Postings();
-            var webGet = new HtmlWeb();
-            var list = new SoftwareJobsList(document);
-            foreach (var link in list.GetLinks())
+            var sites = siteFactory.CreateAll();
+
+            foreach (var webSite in sites)
             {
-                var opportunity = repo.FindByOriginalSourceId(link);
-                if (opportunity != null)
+                var jobsDocument = webGet.Load(webSite.GetJobsListingUrl());
+                var jobs = new SoftwareJobsList(jobsDocument);
+
+                var links = jobs.GetLinks();
+                var fullLinks = links.Select(link => $"{webSite.RootUrl}{link}");
+                var newLinks = fullLinks.Where(link => !repo.ExistsWithOriginalSourceId(link));
+
+                foreach (var link in newLinks)
                 {
-                    continue;
+                    var post = new Post(webGet.Load(link));
+                    var opportunity = PostToOpportunityConverter.Convert(post);
+                    opportunity.OriginalSourceName = "craigslist";
+                    opportunity.OriginalSourceId = link;
+                    yield return opportunity;
                 }
-
-                var htmlDocument = webGet.Load("http://sfbay.craigslist.org" + link);
-                var post = new Post(htmlDocument);
-
-                opportunity = new Opportunity();
-                opportunity.Id = Guid.NewGuid();
-                opportunity.Title = post.GetTitle();
-                opportunity.Body = post.GetBody();
-                opportunity.OriginalSourceId = link;
-                opportunity.OriginalSourceName = "craigslist";
-
-                yield return opportunity;
             }
-        }
-    }
-
-    internal class WebDriver
-    {
-        private readonly HtmlWeb webGet = new HtmlWeb();
-
-        public HtmlDocument Postings()
-        {
-            return webGet.Load("http://sfbay.craigslist.org/search/sof");
         }
     }
 }

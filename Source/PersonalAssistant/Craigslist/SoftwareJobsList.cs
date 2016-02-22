@@ -13,10 +13,10 @@ namespace PersonalAssistant.Craigslist
             this.document = document;
         }
 
-        public IEnumerable<string> GetLinks()
+        public string [] GetLinks()
         {
             var links = document.DocumentNode.SelectNodes("//span[@class='rows']/p/a");
-            return links.Select(node => node.Attributes["href"].Value);
+            return links.Select(node => node.Attributes["href"].Value).ToArray();
         }
     }
 }

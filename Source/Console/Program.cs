@@ -20,7 +20,7 @@ namespace Console
             Bootstrapper.SetAutofacContainer();
 
             var feed = Bootstrapper.Container.Resolve<IOpportunityFeed>();
-            var repository = Bootstrapper.Container.Resolve<IOpportunityRepository>();
+            var repository = Bootstrapper.Container.Resolve<OpportunityRepository>();
 
             WriteMessage("Fetching New...");
 

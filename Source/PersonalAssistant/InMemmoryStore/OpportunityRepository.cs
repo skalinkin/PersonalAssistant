@@ -6,10 +6,10 @@ using PersonalAssistant.InMemmoryStore.POCOs;
 
 namespace PersonalAssistant.InMemmoryStore
 {
-    internal class OpportunityRepository : IOpportunityRepository
+    internal class OpportunityRepository : PersonalAssistant.OpportunityRepository
     {
         private MapperConfiguration config;
-        private IMapper mapper;
+        private readonly IMapper mapper;
 
         public OpportunityRepository()
         {
@@ -22,7 +22,9 @@ namespace PersonalAssistant.InMemmoryStore
             mapper = config.CreateMapper();
         }
 
-        public void Save(Opportunity item)
+        public override string SourceName => "craigslist";
+
+        public override void Save(Opportunity item)
         {
             var documetn = mapper.Map<OpportunityDocument>(item);
 
@@ -34,7 +36,7 @@ namespace PersonalAssistant.InMemmoryStore
             }
         }
 
-        public IEnumerable<Opportunity> FindAll()
+        public override IEnumerable<Opportunity> FindAll()
         {
             var result = new Collection<Opportunity>();
 
@@ -49,17 +51,27 @@ namespace PersonalAssistant.InMemmoryStore
             return result;
         }
 
-        public Opportunity FindByOriginalSourceId(string link)
+        public override Opportunity FindByOriginalSourceId(string link)
         {
             using (var session = new Session())
             {
                 var collection = session.GetCollection<OpportunityDocument>();
-                var document = collection.FindOne(d => d.OriginalSourceName == "craigslist" && d.OriginalSourceId == link);
+                var document = collection.FindOne(d => d.OriginalSourceName == SourceName && d.OriginalSourceId == link);
                 return mapper.Map<Opportunity>(document);
             }
         }
 
-        public void Update(Opportunity opportunity)
+        public override bool ExistsWithOriginalSourceId(string link)
+        {
+            using (var session = new Session())
+            {
+                var collection = session.GetCollection<OpportunityDocument>();
+                var exists = collection.Count(d => d.OriginalSourceName == SourceName && d.OriginalSourceId == link) > 0;
+                return exists;
+            }
+        }
+
+        public override void Update(Opportunity opportunity)
         {
             using (var session = new Session())
             {

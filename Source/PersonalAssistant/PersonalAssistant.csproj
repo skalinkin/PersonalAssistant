@@ -65,15 +65,17 @@
     <Compile Include="Craigslist\CraigslistConfiguration.cs" />
     <Compile Include="Craigslist\OpportunityFeed.cs" />
     <Compile Include="Craigslist\Post.cs" />
+    <Compile Include="Craigslist\PostToOpportunityConverter.cs" />
     <Compile Include="Craigslist\SoftwareJobsList.cs" />
     <Compile Include="Craigslist\WebSite.cs" />
+    <Compile Include="Craigslist\WebSiteFactory.cs" />
     <Compile Include="Entities\Opportunity.cs" />
     <Compile Include="Entities\Resolution.cs" />
     <Compile Include="InMemmoryStore\InMemmoryStoreModule.cs" />
     <Compile Include="InMemmoryStore\POCOs\OpportunityDocument.cs" />
     <Compile Include="InMemmoryStore\Session.cs" />
     <Compile Include="IOpportunityFeed.cs" />
-    <Compile Include="IOpportunityRepository.cs" />
+    <Compile Include="OpportunityRepository.cs" />
     <Compile Include="InMemmoryStore\OpportunityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

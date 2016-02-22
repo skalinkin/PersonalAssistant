@@ -1,17 +1,13 @@
-﻿using System.Collections.ObjectModel;
-
-namespace PersonalAssistant.Craigslist
+﻿namespace PersonalAssistant.Craigslist
 {
     internal class CraigslistConfiguration
     {
-        public string GlobalRoot { get; set; } = "http://www.craigslist.org/about/sites";
-        public Collection<string> RegionRoot { get; set; } = new Collection<string>();
-
-        public CraigslistConfiguration()
+        static CraigslistConfiguration()
         {
-            RegionRoot.Add("http://sfbay.craigslist.org");
         }
 
+        public static CraigslistConfiguration Current { get; } = new CraigslistConfiguration();
 
+        public string[] SiteUrls { get; } = {"https://sfbay.craigslist.org/"};
     }
 }
