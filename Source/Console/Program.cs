@@ -5,6 +5,7 @@ using PersonalAssistant;
 using PersonalAssistant.Craigslist;
 using PersonalAssistant.Entities;
 using PersonalAssistant.InMemmoryStore;
+using PersonalAssistant.MonkeyLearn;
 
 namespace Console
 {
@@ -16,6 +17,7 @@ namespace Console
             Bootstrapper.InitializeBuilder();
             Bootstrapper.Builder.RegisterModule<InMemmoryStoreModule>();
             Bootstrapper.Builder.RegisterModule<CraigslistModule>();
+            Bootstrapper.Builder.RegisterModule<MonkeyLearnModule>();
             Bootstrapper.SetAutofacContainer();
 
             FetchNewOpportunity();

@@ -2,7 +2,7 @@
 
 namespace PersonalAssistant.MonkeyLearn
 {
-    internal class MonkeyLearnModule: Module
+    public class MonkeyLearnModule: Module
     {
         protected override void Load(ContainerBuilder builder)
         {
