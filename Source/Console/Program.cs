@@ -16,21 +16,17 @@ namespace Console
             Bootstrapper.InitializeBuilder();
             Bootstrapper.Builder.RegisterModule<InMemmoryStoreModule>();
             Bootstrapper.Builder.RegisterModule<CraigslistModule>();
-
             Bootstrapper.SetAutofacContainer();
 
-            var feed = Bootstrapper.Container.Resolve<IOpportunityFeed>();
+            FetchNewOpportunity();
+            Analisys();
+
+            System.Console.ReadLine();
+        }
+
+        private static void Analisys()
+        {
             var repository = Bootstrapper.Container.Resolve<OpportunityRepository>();
-
-            WriteMessage("Fetching New...");
-
-            var result = feed.FetchNew();
-
-            foreach (var opportunity in result)
-            {
-                opportunity.Resolution = Resolution.New;
-                repository.Save(opportunity);
-            }
 
             WriteMessage("All Posts");
 
@@ -69,11 +65,24 @@ namespace Console
                         System.Console.ReadKey();
                         System.Console.Clear();
                         break;
-
                 }
             }
+        }
 
-            System.Console.ReadLine();
+        private static void FetchNewOpportunity()
+        {
+            var feed = Bootstrapper.Container.Resolve<IOpportunityFeed>();
+            var repository = Bootstrapper.Container.Resolve<OpportunityRepository>();
+
+            WriteMessage("Fetching New...");
+
+            var result = feed.FetchNew();
+
+            foreach (var opportunity in result)
+            {
+                opportunity.Resolution = Resolution.New;
+                repository.Save(opportunity);
+            }
         }
 
         private static void WriteMessage(string message)
