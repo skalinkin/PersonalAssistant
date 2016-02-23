@@ -6,7 +6,7 @@ namespace PersonalAssistant.MonkeyLearn
     {
         protected override void Load(ContainerBuilder builder)
         {
-            base.Load(builder);
+            builder.RegisterType<MonkeyLearnService>().As<IProbabilityService>();
         }
     }
 }

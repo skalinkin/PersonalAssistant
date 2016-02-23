@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Linq;
 using Autofac;
+using CommandLine;
+using Console.Commands;
+using Console.Options;
 using PersonalAssistant;
 using PersonalAssistant.Craigslist;
 using PersonalAssistant.Entities;
@@ -11,19 +14,60 @@ namespace Console
 {
     internal class Program
     {
+        private const string ReadPrompt = "PA> ";
+
         private static void Main(string[] args)
         {
-            WriteMessage("Initializing...");
             Bootstrapper.InitializeBuilder();
             Bootstrapper.Builder.RegisterModule<InMemmoryStoreModule>();
             Bootstrapper.Builder.RegisterModule<CraigslistModule>();
             Bootstrapper.Builder.RegisterModule<MonkeyLearnModule>();
             Bootstrapper.SetAutofacContainer();
 
-            FetchNewOpportunity();
-            Analisys();
+            var verb = Parser.Default.ParseArguments<DiscoverOptions, TitleAnalisysOptions, DropDbOptions>(args);
 
-            System.Console.ReadLine();
+            var command = GetCommand(verb as Parsed<object>);
+
+            command.Execute();
+        }
+
+        private static Command GetCommand(Parsed<object> verb)
+        {
+            if (verb == null)
+            {
+                return new DefaultCommand();
+            }
+
+            if (verb.Value.GetType() == typeof (DiscoverOptions))
+            {
+                return new DiscoverCommand();
+            }
+
+            if (verb.Value.GetType() == typeof (TitleAnalisysOptions))
+            {
+                return new TitleAnalisysCommand();
+            }
+
+            if (verb.Value.GetType() == typeof(DropDbOptions))
+            {
+                return new DropDbCommand();
+            }
+
+            return new DefaultCommand();
+        }
+
+        public static string ReadFromConsole(string promptMessage = "")
+        {
+            System.Console.Write(ReadPrompt + promptMessage);
+            return System.Console.ReadLine();
+        }
+
+        public static void WriteToConsole(string message = "")
+        {
+            if (message.Length > 0)
+            {
+                System.Console.WriteLine(message);
+            }
         }
 
         private static void Analisys()
@@ -71,25 +115,9 @@ namespace Console
             }
         }
 
-        private static void FetchNewOpportunity()
-        {
-            var feed = Bootstrapper.Container.Resolve<IOpportunityFeed>();
-            var repository = Bootstrapper.Container.Resolve<OpportunityRepository>();
-
-            WriteMessage("Fetching New...");
-
-            var result = feed.FetchNew();
-
-            foreach (var opportunity in result)
-            {
-                opportunity.Resolution = Resolution.New;
-                repository.Save(opportunity);
-            }
-        }
-
         private static void WriteMessage(string message)
         {
-            ConsoleColor defaultColor = System.Console.ForegroundColor;
+            var defaultColor = System.Console.ForegroundColor;
             System.Console.ForegroundColor = ConsoleColor.Green;
             System.Console.WriteLine(message);
             System.Console.ForegroundColor = defaultColor;

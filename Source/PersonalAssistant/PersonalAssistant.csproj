@@ -75,6 +75,8 @@
     <Compile Include="InMemmoryStore\POCOs\OpportunityDocument.cs" />
     <Compile Include="InMemmoryStore\Session.cs" />
     <Compile Include="IOpportunityFeed.cs" />
+    <Compile Include="IProbabilityService.cs" />
+    <Compile Include="MonkeyLearn\MonkeyLearnService.cs" />
     <Compile Include="MonkeyLearn\MonkeyLearnConfiguration.cs" />
     <Compile Include="MonkeyLearn\MonkeyLearnModule.cs" />
     <Compile Include="OpportunityRepository.cs" />

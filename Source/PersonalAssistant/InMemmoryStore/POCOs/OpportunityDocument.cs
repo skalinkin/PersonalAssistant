@@ -14,6 +14,7 @@ namespace PersonalAssistant.InMemmoryStore.POCOs
         public string OriginalSourceName { get; set; }
         public string OriginalSourceId { get; set; }
         public Resolution Resolution { get; set; }
-
+        public bool Read { get; set; }
+        public float Probability { get; set; }
     }
 }
