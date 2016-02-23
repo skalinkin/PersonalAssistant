@@ -74,6 +74,16 @@
     </Compile>
     <Compile Include="Bootstrapper.cs" />
     <Compile Include="DesktopModule.cs" />
+    <Compile Include="IDesktopPlugin.cs" />
+    <Compile Include="ModuleButtonView.xaml.cs">
+      <DependentUpon>ModuleButtonView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ModuleButtonViewModel.cs" />
+    <Compile Include="RetrievingModule\RetrievingDesktopPlugin.cs" />
+    <Compile Include="RetrievingModule\RetrievingModuleView.xaml.cs">
+      <DependentUpon>RetrievingModuleView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RetrievingModule\RetrievingModuleViewModel.cs" />
     <Compile Include="ShellView.xaml.cs">
       <DependentUpon>ShellView.xaml</DependentUpon>
     </Compile>
@@ -108,14 +118,20 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="ModuleButtonView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RetrievingModule\RetrievingModuleView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="ShellView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="RetrievingModule\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\PersonalAssistant\PersonalAssistant.csproj">
       <Project>{d5995591-cc2b-43d9-8104-03242af52452}</Project>

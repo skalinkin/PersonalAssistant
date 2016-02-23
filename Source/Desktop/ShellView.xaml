@@ -6,5 +6,12 @@
              xmlns:local="clr-namespace:Desktop"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
-    <StackPanel/>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="100"></RowDefinition>
+            <RowDefinition Height="*"></RowDefinition>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal" Name="ModulesButtons"></StackPanel>
+        <ContentControl Grid.Row="1" Name="ActiveModule"></ContentControl>
+    </Grid>
 </Window>

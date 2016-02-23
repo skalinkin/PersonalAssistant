@@ -1,8 +1,5 @@
 ﻿using System;
-using System.CodeDom;
-using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
 using System.Windows;
 using Autofac;
 using Caliburn.Micro;
@@ -50,7 +47,7 @@ namespace Desktop
 
         protected override IEnumerable<object> GetAllInstances(Type service)
         {
-            return container.Resolve(typeof(IEnumerable<>).MakeGenericType(service)) as IEnumerable<object>;
+            return container.Resolve(typeof (IEnumerable<>).MakeGenericType(service)) as IEnumerable<object>;
         }
     }
 }
