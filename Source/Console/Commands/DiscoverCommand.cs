@@ -7,7 +7,7 @@ namespace Console.Commands
 {
     internal class DiscoverCommand : Command
     {
-        public override void Execute()
+        public override void Execute(object opt)
         {
             var feed = Bootstrapper.Container.Resolve<IOpportunityFeed>();
             var repository = Bootstrapper.Container.Resolve<OpportunityRepository>();
