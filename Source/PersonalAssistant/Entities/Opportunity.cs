@@ -12,5 +12,6 @@ namespace PersonalAssistant.Entities
         public Resolution Resolution { get; set; }
         public bool Read { get; set; }
         public float Probability { get; set; }
+        public bool Trained { get; set; }
     }
 }

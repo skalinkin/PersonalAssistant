@@ -57,10 +57,12 @@
     <Compile Include="Commands\DropDbCommand.cs" />
     <Compile Include="Commands\ShowCommand.cs" />
     <Compile Include="Commands\TitleAnalisysCommand.cs" />
+    <Compile Include="Commands\TrainCommand.cs" />
     <Compile Include="ConsoleModule.cs" />
     <Compile Include="Options\DiscoverOptions.cs" />
     <Compile Include="Options\DropDbOptions.cs" />
     <Compile Include="Options\ShowOptions.cs" />
+    <Compile Include="Options\TrainOptions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Options\TitleAnalisysOptions.cs" />

@@ -1,6 +1,5 @@
 using System;
 using System.Linq;
-using Autofac;
 using PersonalAssistant;
 using PersonalAssistant.Entities;
 
@@ -8,35 +7,36 @@ namespace Console.Commands
 {
     internal class TitleAnalisysCommand : Command
     {
+        private readonly OpportunityRepository repository;
+
+        public TitleAnalisysCommand(OpportunityRepository repository)
+        {
+            this.repository = repository;
+        }
+
         public override void Execute(object opt)
         {
-            var repository = Bootstrapper.Container.Resolve<OpportunityRepository>();
-
-            var all = repository.FindAll().ToArray();
-            foreach (var opportunity in all)
+            foreach (var opportunity in repository.FindAll().Where(o => o.Resolution == Resolution.New))
             {
-                System.Console.WriteLine("{0} {1}", opportunity.Title, opportunity.Resolution);
-            }
-
-            System.Console.ReadKey();
-            System.Console.Clear();
-
-            foreach (var opportunity in all.Where(o => o.Resolution == Resolution.New))
-            {
+                System.Console.Clear();
+                var defaultColor = System.Console.ForegroundColor;
+                System.Console.ForegroundColor = ConsoleColor.Green;
+                System.Console.WriteLine("I - Interested, N - NotInterested, spacebar - see body.");
+                System.Console.ForegroundColor = defaultColor;
                 System.Console.WriteLine(opportunity.Title);
 
                 var key = System.Console.ReadKey();
-                System.Console.WriteLine();
+
                 switch (key.Key)
                 {
                     case ConsoleKey.N:
                         opportunity.Resolution = Resolution.NotInterested;
                         repository.Update(opportunity);
-                        break;
+                        continue;
                     case ConsoleKey.I:
                         opportunity.Resolution = Resolution.Interested;
                         repository.Update(opportunity);
-                        break;
+                        continue;
                     case ConsoleKey.Spacebar:
                         System.Console.Clear();
                         System.Console.Write(opportunity.Body);

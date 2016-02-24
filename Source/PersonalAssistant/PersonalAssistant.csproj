@@ -50,6 +50,10 @@
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="RestSharp, Version=105.2.3.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\RestSharp.105.2.3\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -76,12 +80,22 @@
     <Compile Include="InMemmoryStore\Session.cs" />
     <Compile Include="IOpportunityFeed.cs" />
     <Compile Include="IProbabilityService.cs" />
+    <Compile Include="ITrainer.cs" />
+    <Compile Include="Categories.cs" />
+    <Compile Include="MonkeyLearn\Classifier.cs" />
+    <Compile Include="MonkeyLearn\ClientFactory.cs" />
+    <Compile Include="MonkeyLearn\GetClassifierDetailResponse.cs" />
+    <Compile Include="MonkeyLearn\ClassifierDetailInformation.cs" />
     <Compile Include="MonkeyLearn\MonkeyLearnService.cs" />
     <Compile Include="MonkeyLearn\MonkeyLearnConfiguration.cs" />
     <Compile Include="MonkeyLearn\MonkeyLearnModule.cs" />
+    <Compile Include="MonkeyLearn\MonkeyLearnTrainer.cs" />
+    <Compile Include="MonkeyLearn\RequestFactory.cs" />
+    <Compile Include="MonkeyLearn\UploadSamplesRequest.cs" />
     <Compile Include="OpportunityRepository.cs" />
     <Compile Include="InMemmoryStore\OpportunityRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sample.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />

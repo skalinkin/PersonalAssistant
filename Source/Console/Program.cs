@@ -23,7 +23,7 @@ namespace Console
             Bootstrapper.Builder.RegisterModule<ConsoleModule>();
             Bootstrapper.SetAutofacContainer();
 
-            Parser.Default.ParseArguments<DiscoverOptions, TitleAnalisysOptions, DropDbOptions, ShowOptions>(args)
+            Parser.Default.ParseArguments<DiscoverOptions, TitleAnalisysOptions, DropDbOptions, ShowOptions, TrainOptions>(args)
                 .WithParsed(opt =>
                 {
                     var name = opt.GetType().Name.Substring(0, opt.GetType().Name.IndexOf("Options", StringComparison.Ordinal)).ToLower();
