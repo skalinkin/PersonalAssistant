@@ -27,25 +27,42 @@ namespace Console.Commands
                 {
                     System.Console.WriteLine("{0,10}{1,20}", category.Id, category.Name);
                 }
-                return;
             }
 
-
-            var samples = new Collection<Sample>();
-            var categories = trainer.GetCategories();
-            var intrestedCategory = categories.First(c => c.Name == "Interested").Id;
-            var notInterestedCategory = categories.First(c => c.Name == "Not Interested").Id;
-
-            foreach (var opportunity in repository.FindAll().Where(o => !o.Trained && o.Resolution != Resolution.New))
+            if (options.History)
             {
-                var sample = new Sample();
-
-                sample.text = opportunity.Body;
-                sample.category_id = opportunity.Resolution == Resolution.Interested ? intrestedCategory : notInterestedCategory;
-                samples.Add(sample);
+                foreach (var opportunity in repository.FindAll().Where(o => o.Trained))
+                { 
+                    opportunity.Trained = false;
+                    repository.Update(opportunity);
+                }
             }
 
-            trainer.Train(samples.ToArray());
+            if (options.LoadSamples)
+            {
+                var samples = new Collection<Sample>();
+                var categories = trainer.GetCategories();
+                var intrestedCategory = categories.First(c => c.Name == "Interested").Id;
+                var notInterestedCategory = categories.First(c => c.Name == "Not Interested").Id;
+
+                foreach (var opportunity in repository.FindAll().Where(o => !o.Trained && o.Resolution != Resolution.New))
+                {
+                    var sample = new Sample();
+
+                    sample.text = opportunity.Body;
+                    sample.category_id = opportunity.Resolution == Resolution.Interested ? intrestedCategory : notInterestedCategory;
+                    samples.Add(sample);
+                    opportunity.Trained = true;
+                    repository.Update(opportunity);
+                }
+
+                trainer.LoadSamples(samples.ToArray());
+            }
+
+            if (options.Execute)
+            {
+                trainer.Train();                
+            }
         }
     }
 }

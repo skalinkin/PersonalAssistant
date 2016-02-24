@@ -4,7 +4,8 @@ namespace PersonalAssistant
 {
     public interface ITrainer
     {
-        void Train(Sample [] samples);
+        void LoadSamples(Sample [] samples);
         IEnumerable<Categories> GetCategories();
+        void Train();
     }
 }

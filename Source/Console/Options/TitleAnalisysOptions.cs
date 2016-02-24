@@ -2,7 +2,7 @@
 
 namespace Console
 {
-    [Verb("titleanalisys")]
+    [Verb("analisys")]
     public class TitleAnalisysOptions
     {
     }
