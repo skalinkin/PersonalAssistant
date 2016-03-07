@@ -1,11 +1,11 @@
 ﻿using System;
 using Autofac;
 using CommandLine;
-using Console.Commands;
 using Console.Options;
 using PersonalAssistant;
 using PersonalAssistant.Craigslist;
 using PersonalAssistant.InMemmoryStore;
+using PersonalAssistant.Logging;
 using PersonalAssistant.MonkeyLearn;
 
 namespace Console
@@ -17,10 +17,13 @@ namespace Console
         private static void Main(string[] args)
         {
             Bootstrapper.InitializeBuilder();
+
+            Bootstrapper.Builder.RegisterModule<LoggingModule>();
             Bootstrapper.Builder.RegisterModule<InMemmoryStoreModule>();
             Bootstrapper.Builder.RegisterModule<CraigslistModule>();
             Bootstrapper.Builder.RegisterModule<MonkeyLearnModule>();
             Bootstrapper.Builder.RegisterModule<ConsoleModule>();
+
             Bootstrapper.SetAutofacContainer();
 
             Parser.Default.ParseArguments<DiscoverOptions, TitleAnalisysOptions, DropDbOptions, ShowOptions, TrainOptions>(args)
@@ -37,7 +40,7 @@ namespace Console
                 });
         }
 
-       public static string ReadFromConsole(string promptMessage = "")
+        public static string ReadFromConsole(string promptMessage = "")
         {
             System.Console.Write(ReadPrompt + promptMessage);
             return System.Console.ReadLine();

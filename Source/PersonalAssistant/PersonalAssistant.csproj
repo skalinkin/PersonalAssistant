@@ -90,6 +90,7 @@
     <Compile Include="IProbabilityService.cs" />
     <Compile Include="ITrainer.cs" />
     <Compile Include="Categories.cs" />
+    <Compile Include="Logging\LoggingModule.cs" />
     <Compile Include="MonkeyLearn\Classifier.cs" />
     <Compile Include="MonkeyLearn\ClientFactory.cs" />
     <Compile Include="MonkeyLearn\GetClassifierDetailResponse.cs" />
