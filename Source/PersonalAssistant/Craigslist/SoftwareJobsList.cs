@@ -15,7 +15,7 @@ namespace PersonalAssistant.Craigslist
 
         public string [] GetLinks()
         {
-            var links = document.DocumentNode.SelectNodes("//span[@class='rows']/p/a");
+            var links = document.DocumentNode.SelectNodes("//a[@class='hdrlnk']");
             return links.Select(node => node.Attributes["href"].Value).ToArray();
         }
     }
