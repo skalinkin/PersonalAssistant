@@ -80,6 +80,7 @@
     </Compile>
     <Compile Include="ModuleButtonViewModel.cs" />
     <Compile Include="RetrievingModule\RetrievingDesktopPlugin.cs" />
+    <Compile Include="RetrievingModule\RetrievingDesktopPluginModule.cs" />
     <Compile Include="RetrievingModule\RetrievingModuleView.xaml.cs">
       <DependentUpon>RetrievingModuleView.xaml</DependentUpon>
     </Compile>

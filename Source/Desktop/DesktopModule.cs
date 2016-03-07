@@ -23,7 +23,7 @@ namespace Desktop
             builder.RegisterType<WindowManager>().As<IWindowManager>();
             builder.RegisterType<EventAggregator>().As<IEventAggregator>();
 
-            builder.RegisterModule<RetrievingModule.RetrievingDesktopPlugin>();
+            builder.RegisterModule<RetrievingModule.RetrievingDesktopPluginModule>();
         }
     }
 }

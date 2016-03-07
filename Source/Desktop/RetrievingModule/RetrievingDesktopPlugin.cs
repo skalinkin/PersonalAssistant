@@ -1,12 +1,6 @@
-﻿using Autofac;
-
-namespace Desktop.RetrievingModule
+﻿namespace Desktop.RetrievingModule
 {
-    internal class RetrievingDesktopPlugin : Module
+    internal class RetrievingDesktopPlugin : IDesktopPlugin
     {
-        protected override void Load(ContainerBuilder builder)
-        {
-            
-        }
     }
 }
