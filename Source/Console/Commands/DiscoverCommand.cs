@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using Autofac;
+﻿using Common.Logging;
 using PersonalAssistant;
 using PersonalAssistant.Entities;
 
@@ -7,10 +6,20 @@ namespace Console.Commands
 {
     internal class DiscoverCommand : Command
     {
+        private readonly IOpportunityFeed feed;
+        private readonly ILog logger;
+        private readonly OpportunityRepository repository;
+
+        public DiscoverCommand(ILog logger, IOpportunityFeed feed, OpportunityRepository repository)
+        {
+            this.logger = logger;
+            this.feed = feed;
+            this.repository = repository;
+        }
+
         public override void Execute(object opt)
         {
-            var feed = Bootstrapper.Container.Resolve<IOpportunityFeed>();
-            var repository = Bootstrapper.Container.Resolve<OpportunityRepository>();
+            logger.Info("Starting Discovery.");
 
             var result = feed.FetchNew();
 

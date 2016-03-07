@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using Common.Logging;
 using HtmlAgilityPack;
 using PersonalAssistant.Entities;
 
@@ -9,18 +10,21 @@ namespace PersonalAssistant.Craigslist
     {
         private readonly OpportunityRepository repo;
         private readonly WebSiteFactory siteFactory;
+        private readonly ILog logger;
         private readonly HtmlWeb webGet;
 
-        public OpportunityFeed(OpportunityRepository repo, WebSiteFactory siteFactory)
+        public OpportunityFeed(OpportunityRepository repo, WebSiteFactory siteFactory, ILog logger)
         {
             this.repo = repo;
             this.siteFactory = siteFactory;
+            this.logger = logger;
             webGet = new HtmlWeb();
         }
 
         public IEnumerable<Opportunity> FetchNew()
         {
-            var sites = siteFactory.CreateAll();
+            logger.Info("Starting Fetch");
+            var sites = siteFactory.CreateAll().ToArray();
 
             foreach (var webSite in sites)
             {

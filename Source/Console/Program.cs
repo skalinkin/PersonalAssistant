@@ -1,6 +1,7 @@
 ﻿using System;
 using Autofac;
 using CommandLine;
+using Common.Logging;
 using Console.Options;
 using PersonalAssistant;
 using PersonalAssistant.Craigslist;
@@ -16,6 +17,8 @@ namespace Console
 
         private static void Main(string[] args)
         {
+            AppDomain.CurrentDomain.UnhandledException += UnhandledExceptionTrapper;
+
             Bootstrapper.InitializeBuilder();
 
             Bootstrapper.Builder.RegisterModule<LoggingModule>();
@@ -38,6 +41,12 @@ namespace Console
                     var command = Bootstrapper.Container.ResolveNamed<Command>("default");
                     command.Execute(opt);
                 });
+        }
+
+        private static void UnhandledExceptionTrapper(object sender, UnhandledExceptionEventArgs e)
+        {
+            LogManager.GetLogger<Program>().Error(e.ExceptionObject);
+            Environment.Exit(1);
         }
 
         public static string ReadFromConsole(string promptMessage = "")
